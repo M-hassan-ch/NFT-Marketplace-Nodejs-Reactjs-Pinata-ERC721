@@ -1,7 +1,6 @@
 {
   "name": "project-5-(nft-marketplace)",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +9,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "create-react-app": "^5.0.1"
-  }
+    "create-react-app": "^5.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M-hassan-ch/NFT-Marketplace-Nodejs-Reactjs-Pinata-ERC721.git"
+  },
+  "bugs": {
+    "url": "https://github.com/M-hassan-ch/NFT-Marketplace-Nodejs-Reactjs-Pinata-ERC721/issues"
+  },
+  "homepage": "https://github.com/M-hassan-ch/NFT-Marketplace-Nodejs-Reactjs-Pinata-ERC721#readme",
+  "description": ""
 }
