@@ -10,12 +10,12 @@ import axios from "axios";
 export default function CreateNft() {
   const [file, setFile] = useState(null);
   const [img, setImg] = useState(null);
-  const fs = require('fs')
+  
   // const client = create('https://ipfs.infura.io:5001/api/v0')
 
   const handleFileUpload = (e) => {
-    console.log('iam called');
-    // console.log(e.target.files[0]);
+    console.log('handling file upload');
+    console.log(e.target.files[0]);
     setFile(e.target.files[0]);
   }
 
@@ -24,7 +24,6 @@ export default function CreateNft() {
 
     if (file) {
       try {
-
         const formData = new FormData();
         formData.append("file", file);
 
@@ -50,23 +49,52 @@ export default function CreateNft() {
   }
 
   const json = async () => {
-    const obj = {
-      attributes: [
-        {
-          "color": "orange",
-          "value": "ABC"
-        }
-      ],
-      description: "This is a nice picture.",
-      image: "https://ipfs.io/ipfs/QmYXEZGtq2pSS7ESzSxHvzqWBokqAmwSB6UiEJAzx8CM2u",
-      name: "Fire"
+    const res =  await fetch('http://localhost:4000/test')
+    // console.log("got res",res);
+    const final = await res.json()
+    // console.log("got final",final)
+    // const obj = {
+    //   attributes: [
+    //     {
+    //       "color": "orange",
+    //       "value": "ABC"
+    //     }
+    //   ],
+    //   description: "This is a nice picture.",
+    //   image: "https://ipfs.io/ipfs/QmYXEZGtq2pSS7ESzSxHvzqWBokqAmwSB6UiEJAzx8CM2u",
+    //   name: "Fire"
+    // }
+    // const json = await JSON.stringify(obj);
+
+    // await fs.writeFile('./file.json', JSON.stringify(json), (err) => {
+    //   if (err) console.log('Error writing file:', err);
+    // })
+  }
+
+  const sendFileToNode = async (e) => {
+
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await axios({
+          method: "post",
+          url: "http://localhost:4000/upload",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data"
+          },
+        });
+        console.log(response)
+        // const ImgHash = `https://ipfs.io/ipfs/${resFile.data.IpfsHash}`;
+        // console.log("file hash", ImgHash);
+
+      } catch (error) {
+        console.log("Error sending File to IPFS: ")
+        console.log(error)
+      }
     }
-    const json = await JSON.stringify(obj);
-
-    await fs.writeFile('./file.json', JSON.stringify(json), (err) => {
-      if (err) console.log('Error writing file:', err);
-    })
-
   }
 
 
@@ -91,7 +119,7 @@ export default function CreateNft() {
                 <input type="file" className="form-control form-control-file mt-2" id="file" onChange={handleFileUpload} />
               </div>
 
-              <button className="btn btn-primary mt-4 px-4 py-2" type='button' onClick={json}><b>create</b></button>
+              <button className="btn btn-primary mt-4 px-4 py-2" type='button' onClick={sendFileToNode}><b>create</b></button>
             </form>
           </div>
         </div>
